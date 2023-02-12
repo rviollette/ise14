@@ -25,7 +25,7 @@ set DISPLAY=%XSERVER_IP%:0.0
 docker run --rm ^
 --mac-address %LICENSE_MAC% ^
 -e DISPLAY=%DISPLAY% ^
--e PATH=/bin:/sbin:/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64 ^
+-e PATH=/bin:/sbin:/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64:/opt/Xilinx/14.7/ISE_DS/common/bin/lin64 ^
 -e LD_LIBRARY_PATH=/opt/Xilinx/14.7/ISE_DS/ISE/lib/lin64:/opt/Xilinx/14.7/ISE_DS/common/lib/lin64 ^
 -e XILINXD_LICENSE_FILE=%XILINX_LICENSE% ^
 -v "%CD%:/workspace" ^

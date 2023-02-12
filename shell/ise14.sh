@@ -18,7 +18,7 @@ docker run --rm \
 -v /etc/group:/etc/group:ro  \
 -v /tmp/.X11-unix:/tmp/.X11-unix \
 -e DISPLAY=$DISPLAY \
--e PATH=/bin:/sbin:$ISE_PATH/ISE/bin/lin64 \
+-e PATH=/bin:/sbin:$ISE_PATH/ISE/bin/lin64:$ISE_PATH/common/bin/lin64 \
 -e LD_LIBRARY_PATH=$ISE_PATH/ISE/lib/lin64:$ISE_PATH/common/lib/lin64 \
 -e XILINXD_LICENSE_FILE=$XILINXD_LICENSE_FILE \
 -v "$PWD:$PWD" \

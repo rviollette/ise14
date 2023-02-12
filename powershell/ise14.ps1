@@ -20,7 +20,7 @@ Write-Host "WORKPLACE: $local"
 & "docker" @("run", "--rm", `
 "--mac-address", "08:00:27:68:c9:35", `
 "-e", ("DISPLAY={0}:0.0" -f $XSERVER_IP), `
-"-e", "PATH=/bin:/sbin:/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64", `
+"-e", "PATH=/bin:/sbin:/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64:/opt/Xilinx/14.7/ISE_DS/common/bin/lin64", `
 "-e", "LD_LIBRARY_PATH=/opt/Xilinx/14.7/ISE_DS/ISE/lib/lin64:/opt/Xilinx/14.7/ISE_DS/common/lib/lin64", `
 "-e", "XILINXD_LICENSE_FILE=/opt/Xilinx/Xilinx.lic", `
 "-v", ("{0}:/workspace" -f $local), `

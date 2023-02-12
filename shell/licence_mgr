@@ -1,2 +1,2 @@
 #!/bin/bash
-source $( dirname "$0" )/ise14.sh /opt/Xilinx/14.7/ISE_DS/common/bin/lin64/xlcm $@
+source $( dirname "$0" )/ise14.sh xlcm $@
