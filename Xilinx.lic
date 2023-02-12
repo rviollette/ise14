@@ -1,0 +1,78 @@
+# ----- REMOVE LINES ABOVE HERE --------------------------
+#
+# This license is valid from Fri Jan 20 02:09:44 UTC 2023.
+#
+# This is license NODELOCKED to HOSTID=7478273f08c3;
+# there is no need to run lmgrd for this license.
+#
+#
+# This is a permanent license generated on Fri Jan 20 02:09:44 UTC 2023
+INCREMENT SDK xilinxd 2024.01 permanent uncounted CAFE02E04587 \
+VENDOR_STRING=rviollette@logitech.com,SDK,software,permanent,_212119256_1777575535_0_803 \
+HOSTID=ANY ISSUER="Xilinx Inc" START=20-Jan-2023 TS_OK
+#
+# This is a permanent license generated on Fri Jan 20 02:09:44 UTC 2023
+INCREMENT V_WebPACK xilinxd 2024.01 permanent uncounted 717DB452B7D7 \
+VENDOR_STRING=rviollette@logitech.com,V_WebPACK,software,permanent,_212119256_1777575535_0_504 \
+HOSTID=ANY ISSUER="Xilinx Inc" START=20-Jan-2023 TS_OK
+#
+# This is a permanent license generated on Fri Jan 20 02:09:44 UTC 2023
+INCREMENT Analyzer xilinxd 2024.01 permanent uncounted 9CF247ED73DB \
+VENDOR_STRING=rviollette@logitech.com,Analyzer,software,permanent,_212119256_1777575535_0_525 \
+HOSTID=ANY ISSUER="Xilinx Inc" START=20-Jan-2023 TS_OK
+#
+# This is a permanent license generated on Fri Jan 20 02:09:44 UTC 2023
+INCREMENT HLS xilinxd 2024.01 permanent uncounted BF4CCF7ACD9F \
+VENDOR_STRING=rviollette@logitech.com,HLS,software,permanent,_212119256_1777575535_0_242 \
+HOSTID=ANY ISSUER="Xilinx Inc" START=20-Jan-2023 TS_OK
+#
+# This is a permanent license generated on Fri Jan 20 02:09:44 UTC 2023
+INCREMENT Embedded_SDK xilinxd 2024.01 permanent uncounted \
+8B10C863A21E \
+VENDOR_STRING=rviollette@logitech.com,Embedded_SDK,software,permanent,_212119256_1777575535_0_229 \
+HOSTID=7478273f08c3 ISSUER="Xilinx Inc" START=20-Jan-2023 \
+TS_OK
+#
+# This is a permanent license generated on Fri Jan 20 02:09:44 UTC 2023
+INCREMENT ISE_WebPACK xilinxd 2024.01 permanent uncounted \
+77BAC1FF625D \
+VENDOR_STRING=rviollette@logitech.com,ISE_WebPACK,software,permanent,_212119256_1777575535_0_430 \
+HOSTID=ANY ISSUER="Xilinx Inc" START=20-Jan-2023 TS_OK
+#
+# This is a permanent license generated on Fri Jan 20 02:09:44 UTC 2023
+INCREMENT ISE_Embedded_Edition xilinxd 2024.01 permanent uncounted \
+E20585D38E79 \
+VENDOR_STRING=rviollette@logitech.com,ISE_Embedded_Edition,software,permanent,_212119256_1777575535_0_165 \
+HOSTID=7478273f08c3 ISSUER="Xilinx Inc" START=20-Jan-2023 \
+TS_OK
+#
+#
+# ----------------------------------------------------------------------
+#  The following PACKAGE definition is a REQUIRED part of this license:
+#
+PACKAGE Embedded_SDK xilinxd 2024.01 B0EAB9F514EA COMPONENTS=SDK \
+OPTIONS=SUITE
+#
+# ------------------------------------------------------------------------------
+#
+#
+# ----------------------------------------------------------------------
+#  The following PACKAGE definition is a REQUIRED part of this license:
+#
+PACKAGE ISE_WebPACK xilinxd 2024.01 422F0C932463 COMPONENTS="SDK \
+WebPACK XC7Z010 XC7Z030 xps_tdp XC7Z020 PlanAhead ChipscopePro \
+ChipScopePro_SIOTK HLS" OPTIONS=SUITE
+#
+# ------------------------------------------------------------------------------
+#
+#
+# ----------------------------------------------------------------------
+#  The following PACKAGE definition is a REQUIRED part of this license:
+#
+PACKAGE ISE_Embedded_Edition xilinxd 2024.01 0F5D70E25256 \
+COMPONENTS="ChipScopePro_SIOTK ChipscopePro ISE XPS ISIM \
+PlanAhead SDK" OPTIONS=SUITE
+#
+# ------------------------------------------------------------------------------
+#
+# ----- REMOVE LINES BELOW HERE --------------------------
