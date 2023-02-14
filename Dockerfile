@@ -1,5 +1,7 @@
 FROM ubuntu:20.04 AS builder
 LABEL stage=builder
+
+SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 
 ADD Xilinx_ISE_DS_Lin_14.7_1015_1.tar /xilinx
@@ -18,14 +20,14 @@ RUN set -eux; \
     ln -s make /usr/bin/gmake;
 
 FROM builder AS installer
-
-COPY install_config.txt /xilinx/
-COPY Xilinx.lic /opt/Xilinx/
+LABEL stage=installer
 
 SHELL ["/bin/bash", "-c"]
+ENV DEBIAN_FRONTEND=noninteractive
 
+ENV TERM=xterm
+COPY install_config.txt /xilinx/
 RUN set -eux; \
-    export TERM=xterm-256color; \
     yes | /xilinx/Xilinx_ISE_DS_Lin_14.7_1015_1/bin/lin64/batchxsetup --batch /xilinx/install_config.txt; \
     bash -c "source /opt/Xilinx/14.7/ISE_DS/settings64.sh && env && echo Xilinx ISE 14.7 installation successful!"; \
     rm -rf /xilinx;
@@ -42,6 +44,10 @@ RUN set -eux; \
 
 
 FROM installer as customizer
+LABEL stage=customizer
+
+SHELL ["/bin/bash", "-c"]
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install other tools
 RUN set -eux; \
@@ -67,3 +73,6 @@ RUN pip install \
     Jinja2>=3.1.2 \
     PyYAML>=5.3.1 \
     dacite>=1.8.0;
+
+# Copy provided licence into the image
+COPY Xilinx.lic /opt/Xilinx/
