@@ -1,1 +1,1 @@
-call %~dp0ise14.cmd ngdbuild %*
+call %~dp0vivado2018.cmd ngdbuild %*

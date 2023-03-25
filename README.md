@@ -71,7 +71,7 @@ docker run --rm \
 -w $PWD \
 -v /dev/bus/usb:/dev/bus/usb \
 --device-cgroup-rule='c *:* rmw' \
--ti $ISE14_IMAGE $@
+-ti $VIVADO_IMAGE $@
 ```
 
 If you have your own license and want to use it, you can overwrite the `LICENSE_MAC` and `XILINXD_LICENSE_FILE` environment variables, LICENSE_MAC is used with the node locked ID of the issued license (the default license has the 08:00:27:68:c9:35 MAC address as node ID), and the XILINXD_LICENSE_FILE variable must point to a valid file inside the docker image (the default is pointed to default one at /opt/Xilinx/Xilinx.lic).
@@ -93,7 +93,7 @@ docker run --rm ^
 -e XILINXD_LICENSE_FILE=%XILINX_LICENSE% ^
 -v "%CD%:/workspace" ^
 -w /workspace ^
--ti %ISE14_IMAGE% %*
+-ti %VIVADO_IMAGE% %*
 ```
 
 Like in Linux, the `LICENSE_MAC`, and `XILINXD_LICENSE_FILE` environment variables can be overwrite if you want to use your own license file.

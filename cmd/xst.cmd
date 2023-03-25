@@ -1,1 +1,1 @@
-call %~dp0ise14.cmd xst %*
+call %~dp0vivado2018.cmd xst %*

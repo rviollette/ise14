@@ -6,8 +6,8 @@ if [%XSERVER_IP%] equ [] (
 for /f "tokens=3 delims=: " %%i  in ('netsh interface ip show config name^="vEthernet (WSL)" ^| findstr /R /C:"^ *IP[v4]* Address"') do set XSERVER_IP=%%i
 )
 
-if [%ISE14_IMAGE%] equ [""] set ISE14_IMAGE=
-if [%ISE14_IMAGE%] equ [] set ISE14_IMAGE="kosmos-ise:14.7"
+if [%VIVADO_IMAGE%] equ [""] set VIVADO_IMAGE=
+if [%VIVADO_IMAGE%] equ [] set VIVADO_IMAGE="kosmos-vivado:2018.3"
 
 if [%XILINX_LICENSE%] equ [""] set XILINX_LICENSE=
 if [%XILINX_LICENSE%] equ [] set XILINX_LICENSE="/opt/Xilinx/Xilinx.lic"
@@ -16,7 +16,7 @@ if [%LICENSE_MAC%] equ [""] set LICENSE_MAC=
 if [%LICENSE_MAC%] equ [] set LICENSE_MAC="74:78:27:3f:08:c3"
 
 echo XSERVER_IP: %XSERVER_IP%  
-echo ISE14_IMAGE: %ISE14_IMAGE%
+echo VIVADO_IMAGE: %VIVADO_IMAGE%
 echo WORKPLACE: %CD%
 echo LICENSE_MAC: %LICENSE_MAC%
 
@@ -30,4 +30,4 @@ docker run --rm ^
 -e XILINXD_LICENSE_FILE=%XILINX_LICENSE% ^
 -v "%CD%:/workspace" ^
 -w /workspace ^
--ti %ISE14_IMAGE% %*
+-ti %VIVADO_IMAGE% %*

@@ -1,2 +1,2 @@
 #!/bin/bash
-source $( dirname "$0" )/ise14.sh inserter $@
+source $( dirname "$0" )/vivado2018.sh inserter $@

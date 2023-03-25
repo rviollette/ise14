@@ -1,2 +1,2 @@
 #!/bin/bash
-source $( dirname "$0" )/ise14.sh xlcm $@
+source $( dirname "$0" )/vivado2018.sh xlcm $@

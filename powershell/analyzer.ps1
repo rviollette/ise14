@@ -1,2 +1,2 @@
-$nargs = ("{0}\ise14.ps1" -f $PSScriptRoot), "analyzer" + $args
+$nargs = ("{0}\vivado2018.ps1" -f $PSScriptRoot), "analyzer" + $args
 PowerShell $nargs

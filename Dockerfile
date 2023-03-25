@@ -3,51 +3,63 @@ LABEL stage=builder
 
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBCONF_NOWARNINGS="yes"
 
-ADD Xilinx_ISE_DS_Lin_14.7_1015_1.tar /xilinx
+ADD Xilinx_Vivado_SDK_2018.3_1207_2324.tar.gz /xilinx
 
+# Add missing package dependencies: custom libpng12 package
+# https://blog.lazy-evaluation.net/posts/linux/vivado-2018-3-buster.html
+COPY "libpng12-0_1.2.50-2+deb8u3dzu1_amd64.deb" /xilinx/
+
+# Add missing package dependencies
+# https://support.xilinx.com/s/question/0D52E00006hpmTmSAI/vivado-20183-final-processing-hangs-at-generating-installed-device-list-on-ubuntu-1904
+# https://support.xilinx.com/s/article/66184
+# https://support.xilinx.com/s/article/63794
 RUN set -eux; \
-    dpkg --add-architecture i386; \
     apt-get update; \
-	apt-get install --no-install-recommends --yes \
-      build-essential libc6-dev-i386 zlib1g:i386 \
-      libncurses5 libcanberra-gtk-module libcanberra-gtk3-module \
-      libusb-dev libusb-0.1-4 libftdi-dev fxload \
-      libsm6 lsb \
-      openjdk-8-jre \
-      libglib2.0-0 libxi6 libxrender1 libxrandr2 libxtst6 libfreetype6 libfontconfig1; \
+    apt-get upgrade --yes; \
+	apt-get install --yes --no-install-recommends \
+      build-essential \
+      libtinfo5 \
+      libncurses5 \
+      lib32stdc++6 \
+      libgtk2.0-0 \
+      libfontconfig1 \
+      libx11-6 \
+      libxext6 \
+      libxrender1 \
+      libsm6 \
+      libice6; \
+	apt-get install --yes --no-install-recommends \
+      "/xilinx/libpng12-0_1.2.50-2+deb8u3dzu1_amd64.deb"; \
 	rm -rf /var/lib/apt/lists/*; \
-    ln -s make /usr/bin/gmake;
+    ln -s /usr/bin/make /usr/bin/gmake;
 
 FROM builder AS installer
 LABEL stage=installer
 
-SHELL ["/bin/bash", "-c"]
-ENV DEBIAN_FRONTEND=noninteractive
-
 ENV TERM=xterm
 COPY install_config.txt /xilinx/
 RUN set -eux; \
-    yes | /xilinx/Xilinx_ISE_DS_Lin_14.7_1015_1/bin/lin64/batchxsetup --batch /xilinx/install_config.txt; \
-    bash -c "source /opt/Xilinx/14.7/ISE_DS/settings64.sh && env && echo Xilinx ISE 14.7 installation successful!"; \
+    /xilinx/Xilinx_Vivado_SDK_2018.3_1207_2324/xsetup \
+      --agree XilinxEULA,3rdPartyEULA,WebTalkTerms \
+      --batch Install \
+      --config /xilinx/install_config.txt \
+      --xdebug; \
+    bash -c "source /opt/Xilinx/Vivado/Vivado/2018.3/settings64.sh && env && echo Xilinx Vivado 2018.3 installation successful!"; \
     rm -rf /xilinx;
 
-RUN set -eux; \
-    cd /opt/Xilinx/14.7/ISE_DS/ISE/lib/lin64; \
-    ls -la libstdc*; \
-    mv libstdc++.so.6.0.8{,.bak}; \
-    mv libstdc++.so.6{,.bak}; \
-    mv libstdc++.so{,.bak}; \
-    ln -s /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28 libstdc++.so.6; \
-    ln -s libstdc++.so.6 libstdc++.so; \
-    ls -la libstdc*;
+# Fix for ERROR: [Common 17-258] Couldn't open 'libX11.so.6': 'libX11.so.6: cannot open shared object file: No such file or directory'
+# https://support.xilinx.com/s/article/62553
+# RUN sed -i '/rdi::x11_workaround/s/^/#/' /opt/Xilinx/Vivado/Vivado/2018.3/lib/scripts/rdi/features/base/base.tcl
+
+# Fix for CRITICAL WARNING: [Common 17-741] No write access right to the local Tcl store
+# https://support.xilinx.com/s/question/0D52E00006hpbifSAA/critical-warning
+ENV XILINX_LOCAL_USER_DATA="no"
 
 
 FROM installer as customizer
 LABEL stage=customizer
-
-SHELL ["/bin/bash", "-c"]
-ENV DEBIAN_FRONTEND=noninteractive
 
 # Install other tools
 RUN set -eux; \

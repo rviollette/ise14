@@ -1,1 +1,1 @@
-call %~dp0ise14.cmd impact %*
+call %~dp0vivado2018.cmd impact %*

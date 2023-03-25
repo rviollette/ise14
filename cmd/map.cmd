@@ -1,1 +1,1 @@
-call %~dp0ise14.cmd map %*
+call %~dp0vivado2018.cmd map %*
