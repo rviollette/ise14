@@ -3,34 +3,35 @@ LABEL stage=builder
 
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBCONF_NOWARNINGS="yes"
 
-ADD Xilinx_ISE_DS_Lin_14.7_1015_1.tar /xilinx
-
+# Install the minimum set of packages required to execute the installer
 RUN set -eux; \
     dpkg --add-architecture i386; \
     apt-get update; \
-	apt-get install --no-install-recommends --yes \
+    apt-get upgrade --yes; \
+	apt-get install --yes --no-install-recommends \
       build-essential libc6-dev-i386 zlib1g:i386 \
       libncurses5 libcanberra-gtk-module libcanberra-gtk3-module \
       libusb-dev libusb-0.1-4 libftdi-dev fxload \
       libsm6 lsb \
       openjdk-8-jre \
-      libglib2.0-0 libxi6 libxrender1 libxrandr2 libxtst6 libfreetype6 libfontconfig1; \
+      libglib2.0-0 libxi6 libxrender1 libxrandr2 libxtst6 libfreetype6 libfontconfig1 \
+      wget; \
 	rm -rf /var/lib/apt/lists/*; \
     ln -s make /usr/bin/gmake;
 
-FROM builder AS installer
-LABEL stage=installer
-
-SHELL ["/bin/bash", "-c"]
-ENV DEBIAN_FRONTEND=noninteractive
-
+# Download and install Xilinx Vivado
+ARG ISE_TAR_HOST
+ARG ISE_TAR_FILE
+ARG ISE_VERSION
 ENV TERM=xterm
-COPY install_config.txt /xilinx/
+COPY install_config.txt /ise-installer/
 RUN set -eux; \
-    yes | /xilinx/Xilinx_ISE_DS_Lin_14.7_1015_1/bin/lin64/batchxsetup --batch /xilinx/install_config.txt; \
+    wget -qO - ${ISE_TAR_HOST}/${ISE_TAR_FILE}.tar | tar x --strip-components=1 -C /ise-installer; \
+    yes | /ise-installer/bin/lin64/batchxsetup --batch /ise-installer/install_config.txt; \
     bash -c "source /opt/Xilinx/14.7/ISE_DS/settings64.sh && env && echo Xilinx ISE 14.7 installation successful!"; \
-    rm -rf /xilinx;
+    rm -rf /ise-installer;
 
 RUN set -eux; \
     cd /opt/Xilinx/14.7/ISE_DS/ISE/lib/lin64; \
@@ -43,24 +44,21 @@ RUN set -eux; \
     ls -la libstdc*;
 
 
-FROM installer as customizer
+FROM builder as customizer
 LABEL stage=customizer
-
-SHELL ["/bin/bash", "-c"]
-ENV DEBIAN_FRONTEND=noninteractive
 
 # Install other tools
 RUN set -eux; \
     apt-get update; \
-	apt-get install --no-install-recommends --yes git nano vim strace htop tree; \
+	apt-get install --yes --no-install-recommends git nano vim strace htop tree less; \
 	rm -rf /var/lib/apt/lists/*;
 
 # Install python 3.7
 RUN set -eux; \
     apt-get update; \
-	apt-get install --no-install-recommends --yes software-properties-common; \
+	apt-get install --yes --no-install-recommends software-properties-common; \
     add-apt-repository ppa:deadsnakes/ppa; \
-	apt-get install --no-install-recommends --yes python3.7 python3.7-distutils python3-pip; \
+	apt-get install --yes --no-install-recommends python3.7 python3.7-distutils python3-pip; \
 	rm -rf /var/lib/apt/lists/*; \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1; \
     update-alternatives --set python /usr/bin/python3.7; \

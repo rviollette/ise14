@@ -1,2 +1,5 @@
-.git
-.gitignore
+.git*
+*.sh
+*.md
+Xilinx_ISE_*.tar
+Xilinx_ISE_*/
